@@ -1,6 +1,7 @@
-import profile
+
 from time import sleep
 import sys
+from tracemalloc import stop
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 import selenium
@@ -10,6 +11,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 driver = webdriver.Chrome(ChromeDriverManager().install())
 
+#d1 ={"download.defa
 
 ##-URLS + START-##
 
@@ -39,7 +41,6 @@ password = driver.find_element(By.XPATH,find_pass).send_keys(password)
 login_button_click= driver.find_element(By.XPATH,login_button).click()
 sleep(5)
 
-
 saving_page = driver.find_element(By.XPATH,"//*[text()='Not Now']").click()
 sleep(5)
 notification_page = driver.find_element(By.XPATH,"//*[text()='Not Now']").click()
@@ -48,8 +49,18 @@ sleep(5)
 
 #profile_go = driver.find_element(By.XPATH)
 
-driver.get(base_url+user_name+'/')
+driver.get(base_url+user_name+'/saved/all-posts/')
 
+sleep(5)
+
+while driver.find_element_by_tag_name('div'):
+    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    Divs=driver.find_element_by_tag_name('div').text
+    if 'End of Results' in Divs:
+        print ("end")
+        break
+    else:
+        continue
 sleep(5)
 
 #driver.quit()
